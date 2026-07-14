@@ -1,0 +1,23 @@
+name: Build Webflow CSS
+on:
+  push:
+    paths:
+      - 'tokens.json' # Triggers only when Figma updates the tokens
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install Style Dictionary
+        run: npm install style-dictionary
+      - name: Build CSS
+        run: npx style-dictionary build
+      - name: Commit Compiled CSS
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add build/
+          git commit -m "Auto-compiled CSS tokens from Figma" || exit 0
+          git push
