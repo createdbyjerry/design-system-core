@@ -13,7 +13,7 @@ jobs:
       - name: Install Style Dictionary
         run: npm install style-dictionary
       - name: Build CSS
-        run: npx style-dictionary build
+        run: npx style-dictionary build --config config.json
       - name: Commit Compiled CSS
         run: |
           git config user.name "GitHub Actions"
